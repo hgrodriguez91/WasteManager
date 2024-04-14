@@ -1,5 +1,5 @@
 application:
-  name: waste-manager-service
+  name: waste-manager-address-service
 spring:
   datasource:
     url: jdbc:h2:tcp://localhost:9090/mem:test_db

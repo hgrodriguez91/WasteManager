@@ -1,0 +1,24 @@
+application:
+  name: waste-manager-service
+  url:
+    waste_manager_address_service: http://localhost:8081/
+spring:
+  datasource:
+    url: jdbc:h2:mem:test_db
+    driverClassName: org.h2.Driver
+    username: sa
+    password: 123456789
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+
+  h2:
+    console:
+      enabled: true
+      # default path: h2-console
+      path: /h2-ui
+
+
+  
