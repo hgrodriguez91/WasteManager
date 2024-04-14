@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: gateway-service
+  cloud:
+    gateway:
+      routes:
+        - id: waste-manager-address-service
+          uri: lb://waste-manager-address-service
+          predicates:
+            - Path=/api/waste-manager/**
+
+
+      discovery:
+        locator:
+          enabled: true
+
+server:
+  port: 8080
+eureka:
+  instance:
+    instance-id: ${spring.application.name}-${random.uuid}

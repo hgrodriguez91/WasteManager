@@ -3,6 +3,7 @@ package com.technical.test.wastemanager;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+
 @SpringBootApplication
 public class WasteManagerServiceApplication {
 
