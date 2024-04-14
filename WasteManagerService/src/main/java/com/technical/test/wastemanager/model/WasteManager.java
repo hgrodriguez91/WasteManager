@@ -14,17 +14,20 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "WASTE_MANAGER")
 public class WasteManager {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String nif;
+    @Builder.Default
     private Boolean isEnabled = Boolean.TRUE;
+    @Builder.Default
     private Long version = 0L;
     private Date createdDate;
     private Date lastModifiedDate;
-
-    @OneToMany
-    private List<WasteCenterAuthorization> listOfWasteCenterAuthorization;
+    private Long  managerAddressId;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wasteManager")
+    private List<WasteCenterAuthorization> wasteCenterAuthorizations;
 }

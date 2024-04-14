@@ -1,10 +1,7 @@
 package com.technical.test.wastemanager.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "WASTE_CENTER_AUTHORIZATION")
 public class WasteCenterAuthorization {
 
     @Id
@@ -22,5 +20,8 @@ public class WasteCenterAuthorization {
     private Long id;
     private String authorizationNumber;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "waste_manager_id")
+    WasteManager wasteManager;
 
 }
