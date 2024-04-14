@@ -2,7 +2,7 @@ package com.technical.test.wastemanager.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import 
+import org.h2.tools.Server;
 import java.sql.SQLException;
 
 

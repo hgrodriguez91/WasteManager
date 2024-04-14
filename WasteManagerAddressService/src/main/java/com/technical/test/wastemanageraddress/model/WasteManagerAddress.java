@@ -1,9 +1,6 @@
 package com.technical.test.wastemanageraddress.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,10 +13,11 @@ import java.util.Date;
 @NoArgsConstructor
 @Builder
 @Entity
+@Table(name = "WASTE_MANAGER_ADDRESS")
 public class WasteManagerAddress {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String address;
     @Builder.Default

@@ -14,6 +14,8 @@ import java.util.List;
 public class WasteManagerDTO {
     private String name;
     private String nif;
+    private Boolean isEnabled = Boolean.TRUE;
+    private Long version = 0L;
     private WasteManagerAddressDTO wasteManagerAddress;
     private List<String> wasteCenterAuthorizations;
 }

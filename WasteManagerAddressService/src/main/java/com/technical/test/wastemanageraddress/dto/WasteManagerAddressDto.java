@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 public class WasteManagerAddressDto {
 
     private String address;
-    @Builder.Default
-    private Boolean isEnabled = Boolean.TRUE;
-    @Builder.Default
-    private Long version = 0L;
+    private Boolean isEnabled ;
+    private Long version;
 }

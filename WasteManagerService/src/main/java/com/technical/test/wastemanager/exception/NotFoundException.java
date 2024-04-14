@@ -1,4 +1,4 @@
-package com.technical.test.wastemanageraddress.exception;
+package com.technical.test.wastemanager.exception;
 
 public class NotFoundException extends RuntimeException {
 

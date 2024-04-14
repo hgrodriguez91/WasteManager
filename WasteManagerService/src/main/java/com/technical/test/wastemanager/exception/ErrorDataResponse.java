@@ -1,4 +1,4 @@
-package com.technical.test.wastemanageraddress.exception;
+package com.technical.test.wastemanager.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @Table(name = "WASTE_MANAGER")
 public class WasteManager {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private String nif;
@@ -25,9 +26,11 @@ public class WasteManager {
     private Boolean isEnabled = Boolean.TRUE;
     @Builder.Default
     private Long version = 0L;
+    @CreationTimestamp
     private Date createdDate;
+    @CreationTimestamp
     private Date lastModifiedDate;
     private Long  managerAddressId;
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wasteManager")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "wasteManager", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WasteCenterAuthorization> wasteCenterAuthorizations;
 }

@@ -1,6 +1,6 @@
-package com.technical.test.wastemanageraddress.exception;
+package com.technical.test.wastemanager.exception;
 
-import com.technical.test.wastemanageraddress.util.ConstantsCode;
+import com.technical.test.wastemanager.util.ConstantsCode;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

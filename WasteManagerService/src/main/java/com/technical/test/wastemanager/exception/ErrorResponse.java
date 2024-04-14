@@ -1,4 +1,4 @@
-package com.technical.test.wastemanageraddress.exception;
+package com.technical.test.wastemanager.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

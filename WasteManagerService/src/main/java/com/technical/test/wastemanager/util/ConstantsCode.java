@@ -1,4 +1,4 @@
-package com.technical.test.wastemanageraddress.util;
+package com.technical.test.wastemanager.util;
 
 /**
  * Constants for defining common error codes.

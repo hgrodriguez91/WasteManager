@@ -31,10 +31,9 @@ public class WasteManagerAddressServiceImpl implements WasteManagerAddressServic
 
     @Override
     public GenericResponseDto<WasteManagerAddress> getById(Long id) {
-        return addressRepository
-                .findWasteManagerAddressById(id)
-                .map(ma -> new GenericResponseDto<>("Listed Success", ma, STATUS_SUCCES))
-                .orElseThrow(() -> new NotFoundException("The requested address dont exist in the database"));
+        WasteManagerAddress managerAddress = addressRepository
+                .findWasteManagerAddressById(id).orElseThrow(() -> new NotFoundException("The requested address dont exist in the database"));
+        return new GenericResponseDto<>("Listed Success", managerAddress, STATUS_SUCCES);
     }
 
     @Override

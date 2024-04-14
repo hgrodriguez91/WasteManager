@@ -14,8 +14,8 @@ import java.util.Date;
 public class WasteManagerAddress {
     private Long id;
     private String address;
-    private Boolean isEnabled ;
-    private Long version ;
+    private Boolean isEnabled;
+    private Long version;
     private Date createdDate;
     private Date lastModifiedDate;
 }

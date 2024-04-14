@@ -1,11 +1,9 @@
 package com.technical.test.wastemanager.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
@@ -16,12 +14,19 @@ import lombok.NoArgsConstructor;
 public class WasteCenterAuthorization {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "AUTHORIZATION_NUMBER")
     private String authorizationNumber;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     @JoinColumn(name = "waste_manager_id")
     WasteManager wasteManager;
 
+    public WasteCenterAuthorization(String authorizationNumber, WasteManager wasteManager) {
+        this.authorizationNumber = authorizationNumber;
+        this.wasteManager = wasteManager;
+    }
 }
