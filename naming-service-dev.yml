@@ -5,6 +5,7 @@ spring:
     loadbalancer:
       enabled: false
 
+
 eureka:
   client:
     register-with-eureka: false
@@ -12,4 +13,3 @@ eureka:
   instance:
     hostname: naming-service
     prefer-ip-address: false
-    
