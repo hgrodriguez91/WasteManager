@@ -3,6 +3,7 @@
 - Java 17
 - Spring Boot
 - Maven
+- Docker (Opcinal)
 ## Descripción del problema
 Dadas las siguientes entidades
 ![Diagrama sin título drawio](https://github.com/hgrodriguez91/WasteManager/assets/53783242/50e686e4-9c4e-428c-a62c-4abf5436c82f)
@@ -117,6 +118,101 @@ curl --location --request PUT 'http://localhost:8080/api/manager-address/1' \
 '
 ```
 
-## Orden de ejecución
+## Ejecución local
 
 Primeramente se debe iniciar el microservicio CloudConfigService que es el que se va a encargar de entragar las configuraciones necesarias para el funcionamiento de los demas microservicioa. Luego debe iniciar el microservicio NamingService el cual por su parte se encarga de registrar los microservicios. Una vez que estos microservicios esten corriento ya sera el momento de iniciar los microservicios WasteManagerService, WasteManagerAddressService y GatewayService respectivamente.
+
+## Ejecución con Docker
+El proyecto cuenta con un archivo docker-compose.yml y los Dockerfile para cada servicio para el caso que se desee ejecutar en un ambiente de contenedores 
+
+### WasteManagerService (Dockerfile)
+```
+FROM openjdk:8-jdk-alpine
+ADD target/WasteManager-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+```
+### docker-compose.yml
+```
+version: '1.0'
+services:
+  cloud-config-server:
+    build:
+      context: ./CloudConfigServer
+      dockerfile: Dockerfile
+    container_name: cloud-config-server-app   
+    restart: always    
+    ports:
+      - 8888:8888
+    networks:
+      - 'waste-manager-network'
+
+  naming-service:
+    build:
+      context: ./NamingService
+      dockerfile: Dockerfile
+    container_name: naming-service-app
+    restart: always
+    ports:
+      - '8761:8761'
+    networks:
+      - 'waste-manager-network'
+    depends_on:
+      - cloud-config-server
+
+  gateway-service:
+    build:
+      context: ./GatewayService
+      dockerfile: Dockerfile
+    container_name: gateway-service-app
+     environment:
+      - EUREKA_SERVER: gateway-service
+    restart: always
+    ports:
+      - '8080:8080'
+    networks:
+      - 'waste-manager-network'
+    depends_on:
+      - cloud-config-server
+      - naming-service
+
+  waste-manager-service:
+    build:
+      context: ./WasteManagerService
+      dockerfile: Dockerfile
+    container_name: waste-manager-service-app
+     environment:
+      - EUREKA_SERVER: waste-manager-address-service
+      - CONFIG_SERVICE: cloud-config-server
+    restart: always
+    networks:
+      - 'waste-manager-network'
+    depends_on:
+      - cloud-config-server
+      - naming-service   
+
+    waste-manager-address-service:
+    build:
+      context: ./WasteManagerAddressService
+      dockerfile: Dockerfile
+    container_name: waste-manager-address-service-app
+     environment:
+      - EUREKA_SERVER: naming-service
+      - CONFIG_SERVICE: cloud-config-server
+    restart: always
+    networks:
+      - 'waste-manager-network'
+    depends_on:
+      - cloud-config-server
+      - naming-service 
+
+networks:
+  waste-manager-network:
+```
+
+La propiedad  depends_on define el orden en que los microservicios deben inicial.
+
+## Ejemplo de consumo 
+### FindById
+
+![Ejemplo de ejecucion](https://github.com/hgrodriguez91/WasteManager/assets/53783242/5acd8983-67fd-4417-a432-3445a1a792b5)
+
