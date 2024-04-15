@@ -4,7 +4,7 @@
 - [Descripción del problema](#Descripción)
 - [Propuesta de solución](#Requerimientos)
 - [Ejecucion en local](#Ejecucion_local)
-- [Ejecucion con Docker](#Requerimientos)
+- [Ejecucion con Docker](#Docker)
 - [Ejemplo de Consumo con Postman](#ejemplo)
 
   
