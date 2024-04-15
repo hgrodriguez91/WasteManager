@@ -65,7 +65,7 @@ class WasteManagerAddressControllerTest {
     @DisplayName("getAllAddress should return GenericResponseDto<List<WasteManagerAddress>>")
     void getAllAddress() throws Exception {
         when(addressService.getAll()).thenReturn(new GenericResponseDto<>("Listed Success", Collections.singletonList(managerAddress), STATUS_SUCCES));
-        mockMvc.perform(get("/manager-address").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/api/manager-address").contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(result -> new GenericResponseDto<>("Listed Success", Collections.singletonList(managerAddress), STATUS_SUCCES));
@@ -76,7 +76,7 @@ class WasteManagerAddressControllerTest {
     @DisplayName("getById should return GenericResponseDto<WasteManagerAddress>")
     void getAddressById() throws Exception {
         when(addressService.getById(anyLong())).thenReturn(new GenericResponseDto<>("Listed Success", managerAddress, STATUS_SUCCES));
-        mockMvc.perform(get("/manager-address/{id}", 1L)
+        mockMvc.perform(get("/api/manager-address/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -88,7 +88,7 @@ class WasteManagerAddressControllerTest {
     @DisplayName("getAddressById should throw a NotFoundexception")
     void getAddressByIdThrow404Exception() throws Exception {
         when(addressService.getById(anyLong())).thenThrow(new NotFoundException("The requested address dont exist in the database"));
-        mockMvc.perform(get("/manager-address/{id}", 1L)
+        mockMvc.perform(get("/api/manager-address/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNotFound())
@@ -100,7 +100,7 @@ class WasteManagerAddressControllerTest {
     @DisplayName("createAddress should return the created GenericResponseDto<WasteManagerAddress>")
     void createAddress() throws Exception {
         when(addressService.create(managerAddressDto)).thenReturn(new GenericResponseDto<>("WasteManagerAddress created", managerAddress, STATUS_SUCCES));
-        mockMvc.perform(post("/manager-address")
+        mockMvc.perform(post("/api/manager-address")
                         .content(gson.toJson(managerAddressDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -113,7 +113,7 @@ class WasteManagerAddressControllerTest {
     @DisplayName("updateAddress should return the edited GenericResponseDto<WasteManagerAddress>")
     void updateAddress() throws Exception {
         when(addressService.edit(1L,managerAddressDto)).thenReturn(new GenericResponseDto<>("Address edited", managerAddress, STATUS_SUCCES));
-        mockMvc.perform(put("/manager-address/{id}", 1L)
+        mockMvc.perform(put("/api/manager-address/{id}", 1L)
                         .content(gson.toJson(managerAddressDto))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -126,7 +126,7 @@ class WasteManagerAddressControllerTest {
     @DisplayName("DeleteAddress should return the OK status")
     void deleteAddress() throws Exception {
         when(addressService.delete(1L)).thenReturn(new GenericResponseDto<>("Address deleted", null, STATUS_SUCCES));
-        mockMvc.perform(delete("/manager-address/{id}", 1L)
+        mockMvc.perform(delete("/api/manager-address/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())

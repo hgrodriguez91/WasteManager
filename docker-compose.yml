@@ -1,0 +1,74 @@
+version: '1.0'
+services:
+  cloud-config-server:
+    build:
+      context: ./CloudConfigServer
+      dockerfile: Dockerfile
+    container_name: cloud-config-server-app   
+    restart: always    
+    ports:
+      - 8888:8888
+    networks:
+      - 'waste-manager-network'
+
+  naming-service:
+    build:
+      context: ./NamingService
+      dockerfile: Dockerfile
+    container_name: naming-service-app
+    restart: always
+    ports:
+      - '8761:8761'
+    networks:
+      - 'waste-manager-network'
+    depends_on:
+      - cloud-config-server
+
+  gateway-service:
+    build:
+      context: ./GatewayService
+      dockerfile: Dockerfile
+    container_name: gateway-service-app
+     environment:
+      - EUREKA_SERVER: naming-service
+    restart: always
+    ports:
+      - '8080:8080'
+    networks:
+      - 'waste-manager-network'
+    depends_on:
+      - cloud-config-server
+      - naming-service
+
+  waste-manager-service:
+    build:
+      context: ./WasteManagerService
+      dockerfile: Dockerfile
+    container_name: waste-manager-service-app
+     environment:
+      - EUREKA_SERVER: naming-service
+      - CONFIG_SERVICE: cloud-config-server
+    restart: always
+    networks:
+      - 'waste-manager-network'
+    depends_on:
+      - cloud-config-server
+      - naming-service   
+
+    waste-manager-service:
+    build:
+      context: ./WasteManagerService
+      dockerfile: Dockerfile
+    container_name: waste-manager-service-app
+     environment:
+      - EUREKA_SERVER: naming-service
+      - CONFIG_SERVICE: cloud-config-server
+    restart: always
+    networks:
+      - 'waste-manager-network'
+    depends_on:
+      - cloud-config-server
+      - naming-service 
+
+networks:
+  waste-manager-network:
