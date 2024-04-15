@@ -1,9 +1,21 @@
 # Prueba Técnica : Backend developer Java
+## Indice de contenido
+- [Requerimientos](#Requerimientos)
+- [Descripción del problema](#Descripción)
+- [Propuesta de solución](#Requerimientos)
+- [Ejecucion en local](#Ejecucion_local)
+- [Ejecucion con Docker](#Requerimientos)
+- [Ejemplo de Consumo con Postman](#ejemplo)
+
+  
+<a name="Requerimientos"></a>
 ## Requerimientos
 - Java 17
 - Spring Boot
 - Maven
 - Docker (Opcinal)
+
+ <a name="Descripción"></a>
 ## Descripción del problema
 Dadas las siguientes entidades
 ![Diagrama sin título drawio](https://github.com/hgrodriguez91/WasteManager/assets/53783242/50e686e4-9c4e-428c-a62c-4abf5436c82f)
@@ -22,6 +34,7 @@ utilizados para la creacióndel objeto no son de interés para un usuario final.
   
 El objetivo es llamar a los endpoints creados en WasteManagerService a través del GatewayService. 
 
+<a name="Propuesta"></a>
 ## Propuesta de solución
 Una vez analisado el problema se plantea una arquitectura basada en Spring Cloud como se muestra a continuacion.
 ![Arquitectura](https://github.com/hgrodriguez91/WasteManager/assets/53783242/095bde4d-6669-4226-a0af-17a80306f9f4)
@@ -117,11 +130,12 @@ curl --location --request PUT 'http://localhost:8080/api/manager-address/1' \
 }
 '
 ```
-
+<a name="Ejecucion_local"></a>
 ## Ejecución local
 
 Primeramente se debe iniciar el microservicio CloudConfigService que es el que se va a encargar de entragar las configuraciones necesarias para el funcionamiento de los demas microservicioa. Luego debe iniciar el microservicio NamingService el cual por su parte se encarga de registrar los microservicios. Una vez que estos microservicios esten corriento ya sera el momento de iniciar los microservicios WasteManagerService, WasteManagerAddressService y GatewayService respectivamente.
 
+<a name="Docker"></a>
 ## Ejecución con Docker
 El proyecto cuenta con un archivo docker-compose.yml y los Dockerfile para cada servicio para el caso que se desee ejecutar en un ambiente de contenedores 
 
@@ -211,7 +225,9 @@ networks:
 
 La propiedad  depends_on define el orden en que los microservicios deben inicial.
 
-## Ejemplo de consumo 
+<a name="ejemplo"></a>
+## Ejemplo de consumo con Postman
+
 ### FindById
 
 ![Ejemplo de ejecucion](https://github.com/hgrodriguez91/WasteManager/assets/53783242/5acd8983-67fd-4417-a432-3445a1a792b5)
