@@ -1,18 +1,16 @@
 package com.technical.test.wastemanager.service.impl;
 
 import com.technical.test.wastemanager.api.model.WasteManagerAddress;
-import com.technical.test.wastemanager.dto.GenericResponseDTO;
-import com.technical.test.wastemanager.dto.WasteManagerAddressDTO;
+import com.technical.test.wastemanager.dto.GenericResponseDto;
+import com.technical.test.wastemanager.dto.WasteManagerAddressDto;
 import com.technical.test.wastemanager.dto.WasteManagerDTO;
 import com.technical.test.wastemanager.exception.NotFoundException;
 import com.technical.test.wastemanager.model.WasteCenterAuthorization;
 import com.technical.test.wastemanager.model.WasteManager;
-import com.technical.test.wastemanager.repository.WasteCenterAuthorizationRepository;
 import com.technical.test.wastemanager.repository.WasteManagerRepository;
 import com.technical.test.wastemanager.service.CallApiService;
 import com.technical.test.wastemanager.service.WasteManagerService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,20 +25,19 @@ public class WasteManagerServiceImpl implements WasteManagerService {
 
     private final CallApiService callApiService;
 
+
     private final WasteManagerRepository wasteManagerRepository;
-    private final WasteCenterAuthorizationRepository centerAuthorizationRepository;
-    private final ModelMapper modelMapper;
 
     @Override
-    public GenericResponseDTO<WasteManagerDTO> findById(Long id) throws IOException {
+    public GenericResponseDto<WasteManagerDTO> findById(Long id) throws IOException {
         WasteManager wasteManager = wasteManagerRepository.findById(id).orElseThrow(() -> new NotFoundException("WestManager not found"));
         WasteManagerAddress wasteManagerAddress = callApiService.getAddressById(wasteManager.getManagerAddressId());
-        return new GenericResponseDTO<>("WasteManager retrived", mapToWasteManagerDTO(wasteManagerAddress, wasteManager), "Status");
+        return new GenericResponseDto<>("WasteManager retrived", mapToWasteManagerDTO(wasteManagerAddress, wasteManager), "Status");
     }
 
     @Override
     @Transactional
-    public GenericResponseDTO<WasteManagerDTO> create(WasteManagerDTO wasteManagerDTO) throws IOException {
+    public GenericResponseDto<WasteManagerDTO> create(WasteManagerDTO wasteManagerDTO) throws IOException {
         WasteManagerAddress wasteManagerAddress = callApiService.createAddress(wasteManagerDTO.getWasteManagerAddress());
         WasteManager manager = WasteManager.builder()
                 .name(wasteManagerDTO.getName())
@@ -55,11 +52,11 @@ public class WasteManagerServiceImpl implements WasteManagerService {
                 .toList();
         manager.setWasteCenterAuthorizations(wasteCenterAuthorizations);
         wasteManagerRepository.save(manager);
-        return new GenericResponseDTO<>("WasteManager created", mapToWasteManagerDTO(wasteManagerAddress, manager), "Status");
+        return new GenericResponseDto<>("WasteManager created", mapToWasteManagerDTO(wasteManagerAddress, manager), "Status");
     }
 
     @Override
-    public GenericResponseDTO<WasteManagerDTO> update(Long id, WasteManagerDTO wasteManagerDTO) throws IOException {
+    public GenericResponseDto<WasteManagerDTO> update(Long id, WasteManagerDTO wasteManagerDTO) throws IOException {
         WasteManager manager = wasteManagerRepository.findById(id).orElseThrow(() -> new NotFoundException("WestManager not found"));
         WasteManagerAddress wasteManagerAddress = callApiService.updateAddress(manager.getManagerAddressId(), wasteManagerDTO.getWasteManagerAddress());
         manager.setName(wasteManagerDTO.getName());
@@ -67,7 +64,7 @@ public class WasteManagerServiceImpl implements WasteManagerService {
         manager.setVersion(wasteManagerDTO.getVersion());
         manager.setIsEnabled(wasteManagerDTO.getIsEnabled());
         wasteManagerRepository.save(manager);
-        return new GenericResponseDTO<>("WasteManager updated", mapToWasteManagerDTO(wasteManagerAddress, manager), "Status");
+        return new GenericResponseDto<>("WasteManager updated", mapToWasteManagerDTO(wasteManagerAddress, manager), "Status");
     }
 
     private WasteManagerDTO mapToWasteManagerDTO(WasteManagerAddress managerAddress, WasteManager manager) {
@@ -81,7 +78,7 @@ public class WasteManagerServiceImpl implements WasteManagerService {
                         .stream()
                         .map(WasteCenterAuthorization::getAuthorizationNumber)
                         .collect(Collectors.toList()))
-                .wasteManagerAddress(WasteManagerAddressDTO.builder()
+                .wasteManagerAddress(WasteManagerAddressDto.builder()
                         .address(managerAddress.getAddress())
                         .version(managerAddress.getVersion())
                         .isEnabled(managerAddress.getIsEnabled())

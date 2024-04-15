@@ -4,11 +4,14 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: waste-manager-service
+          uri: lb://waste-manager-service
+          predicates:
+            - Path=/api/waste-manager/**
         - id: waste-manager-address-service
           uri: lb://waste-manager-address-service
           predicates:
-            - Path=/api/waste-manager/**
-
+            - Path=/api/manager-address/**
 
       discovery:
         locator:
@@ -19,3 +22,6 @@ server:
 eureka:
   instance:
     instance-id: ${spring.application.name}-${random.uuid}
+  client:
+    service-url:
+      default-zone: http://localhost:8761

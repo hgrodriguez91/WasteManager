@@ -1,7 +1,6 @@
 package com.technical.test.wastemanager.controller;
 
-import com.technical.test.wastemanager.dto.GenericResponseDTO;
-import com.technical.test.wastemanager.dto.WasteManagerAddressDTO;
+import com.technical.test.wastemanager.dto.GenericResponseDto;
 import com.technical.test.wastemanager.dto.WasteManagerDTO;
 import com.technical.test.wastemanager.service.WasteManagerService;
 import lombok.RequiredArgsConstructor;
@@ -20,17 +19,17 @@ public class WasteManagerController {
     private final WasteManagerService wasteManagerService;
 
     @GetMapping("/{id}")
-    ResponseEntity<GenericResponseDTO<WasteManagerDTO>> findById(@PathVariable("id") Long id) throws IOException {
+    ResponseEntity<GenericResponseDto<WasteManagerDTO>> findById(@PathVariable("id") Long id) throws IOException {
         return new ResponseEntity<>(wasteManagerService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping()
-    ResponseEntity<GenericResponseDTO<WasteManagerDTO>> create(@RequestBody WasteManagerDTO wasteManagerDTO) throws IOException {
+    ResponseEntity<GenericResponseDto<WasteManagerDTO>> create(@RequestBody WasteManagerDTO wasteManagerDTO) throws IOException {
         return new ResponseEntity<>(wasteManagerService.create(wasteManagerDTO), HttpStatus.OK);
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<GenericResponseDTO<WasteManagerDTO>> update(@PathVariable("id") Long id,
+    ResponseEntity<GenericResponseDto<WasteManagerDTO>> update(@PathVariable("id") Long id,
                                                                @RequestBody WasteManagerDTO wasteManagerDTO) throws IOException {
         return new ResponseEntity<>(wasteManagerService.update(id,wasteManagerDTO), HttpStatus.OK);
     }

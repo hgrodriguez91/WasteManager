@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class WasteManagerAddressDTO {
+public class GenericResponseDto<T> {
 
-    private String address;
-    private Boolean isEnabled;
-    private Long version;
+    private String message;
+
+    private T data;
+
+    private String status;
 }

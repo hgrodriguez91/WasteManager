@@ -1,70 +1,52 @@
 package com.technical.test.wastemanager.service.impl;
 
-import com.technical.test.wastemanager.api.CallWasteManagerAddressService;
+import com.technical.test.wastemanager.api.ManagerAddressApi;
 import com.technical.test.wastemanager.api.model.WasteManagerAddress;
-import com.technical.test.wastemanager.dto.GenericResponseDTO;
-import com.technical.test.wastemanager.dto.WasteManagerAddressDTO;
+import com.technical.test.wastemanager.dto.GenericResponseDto;
+import com.technical.test.wastemanager.dto.WasteManagerAddressDto;
 import com.technical.test.wastemanager.service.CallApiService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import retrofit2.Call;
-import retrofit2.Response;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class CallApiServiceImpl implements CallApiService {
 
-    private final CallWasteManagerAddressService managerAddressService;
+    private final ManagerAddressApi managerAddressApi;
 
     @Override
-    public WasteManagerAddress createAddress(WasteManagerAddressDTO managerAddressDto) throws IOException {
-
-        Call<GenericResponseDTO<WasteManagerAddress>> addressCall = managerAddressService.createAddress(managerAddressDto);
-        Response<GenericResponseDTO<WasteManagerAddress>> response = addressCall.execute();
-        if (response.isSuccessful() && response.body() != null) {
-            return response.body().getData();
-        }
-        throw new IOException("Algo paso aqui");
+    public WasteManagerAddress createAddress(WasteManagerAddressDto managerAddressDto){
+        ResponseEntity<GenericResponseDto<WasteManagerAddress>> responseAddress = managerAddressApi.createAddress(managerAddressDto);
+            return Objects.requireNonNull(responseAddress.getBody()).getData();
     }
 
     @Override
-    public List<WasteManagerAddress> getAllAddress() throws IOException {
-        Call<GenericResponseDTO<List<WasteManagerAddress>>> addressCall = managerAddressService.getAllAddress();
-        Response<GenericResponseDTO<List<WasteManagerAddress>>> response = addressCall.execute();
-        if (response.isSuccessful() && response.body() != null) {
-            return response.body().getData();
-        }
-        throw new IOException("Algo paso aqui");
+    public List<WasteManagerAddress> getAllAddress(){
+        ResponseEntity<GenericResponseDto<List<WasteManagerAddress>>> responseAddress = managerAddressApi.getAllAddress();
+            return Objects.requireNonNull(responseAddress.getBody()).getData();
     }
 
     @Override
-    public WasteManagerAddress getAddressById(Long id) throws IOException {
-        Call<GenericResponseDTO<WasteManagerAddress>> addressCall = managerAddressService.getAddressById(id);
-        Response<GenericResponseDTO<WasteManagerAddress>> response = addressCall.execute();
-        if (response.isSuccessful() && response.body() != null) {
-            return response.body().getData();
-        }
-        throw new IOException("Algo paso aqui");
+    public WasteManagerAddress getAddressById(Long id) {
+        ResponseEntity<GenericResponseDto<WasteManagerAddress>> responseAddress = managerAddressApi.getAddressById(id);
+            return Objects.requireNonNull(responseAddress.getBody()).getData();
     }
 
     @Override
-    public WasteManagerAddress updateAddress(Long id, WasteManagerAddressDTO managerAddressDto) throws IOException {
-        Call<GenericResponseDTO<WasteManagerAddress>> addressCall = managerAddressService.updateAddress(id, managerAddressDto);
-        Response<GenericResponseDTO<WasteManagerAddress>> response = addressCall.execute();
-        if (response.isSuccessful() && response.body() != null) {
-            return response.body().getData();
+    public WasteManagerAddress updateAddress(Long id, WasteManagerAddressDto managerAddressDto) {
+        ResponseEntity<GenericResponseDto<WasteManagerAddress>> responseAddress = managerAddressApi.updateAddress(id, managerAddressDto);
+            return Objects.requireNonNull(responseAddress.getBody()).getData();
         }
-        throw new IOException("Algo paso aqui");
-    }
+
 
     @Override
-    public Boolean deleteAddress(Long id) throws IOException {
-        Call<GenericResponseDTO<WasteManagerAddress>> addressCall = managerAddressService.deleteAddress(id);
-        Response<GenericResponseDTO<WasteManagerAddress>> response = addressCall.execute();
-        return response.isSuccessful();
+    public Boolean deleteAddress(Long id) {
+            ResponseEntity<GenericResponseDto<String>> responseAddress = managerAddressApi.deleteAddress(id);
+            return responseAddress.hasBody();
     }
 }

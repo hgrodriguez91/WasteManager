@@ -8,3 +8,7 @@ spring:
 eureka:
   instance:
     instance-id: ${spring.application.name:waste-manager-service}-${random.uuid}
+  client:
+    service-url:
+      default-zone: http://localhost:8761
+

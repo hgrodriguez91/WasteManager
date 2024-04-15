@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/manager-address")
+@RequestMapping("/api/manager-address")
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class WasteManagerAddressController {
 

@@ -16,6 +16,6 @@ public class WasteManagerDTO {
     private String nif;
     private Boolean isEnabled = Boolean.TRUE;
     private Long version = 0L;
-    private WasteManagerAddressDTO wasteManagerAddress;
+    private WasteManagerAddressDto wasteManagerAddress;
     private List<String> wasteCenterAuthorizations;
 }
