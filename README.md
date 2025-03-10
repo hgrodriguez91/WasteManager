@@ -20,13 +20,13 @@
 Dadas las siguientes entidades
 ![Diagrama sin título drawio](https://github.com/hgrodriguez91/WasteManager/assets/53783242/50e686e4-9c4e-428c-a62c-4abf5436c82f)
 El objetivo principal es crear y actualizar un objeto WasteManagerEntity , asumiendo que un objeto 
-WasteManagerEntity contiene a suvez un objeto WasteManagerAddressEntity y una lista de 
+WasteManagerEntity contiene a su vez un objeto WasteManagerAddressEntity y una lista de 
 WasteCenterAuthorizationEntity. 
 Los datos correspondientes a WasteManagerAddressEntity serán necesario que el servicio 
 WasteManagerAddressService los gestione. Es decir, deberá disponer de su correspondiente CRUD y que 
 WasteManagerService haga uso de el. 
 Finalmente será necesario consultar los datos insertados previamente, entendiendo que parte de los campos 
-utilizados para la creacióndel objeto no son de interés para un usuario final. 
+utilizados para la creación del objeto no son de interés para un usuario final. 
 ### Ademas crear 3 microservicios:
 - CloudConfigServer
 - NamingService
